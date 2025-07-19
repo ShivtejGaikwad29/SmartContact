@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Home - Smart Contact Manager</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		.banner {
+			background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+				url('/img/banner.jpg') center center/cover no-repeat;
+			height: 100vh;
+			color: white;
+		}
+		.info-section {
+			padding: 60px 20px;
+			background-color: #f8f9fa;
+		}
+	</style>
+</head>
+<body>
+	<!-- Banner Section -->
+	<section class="banner d-flex align-items-center justify-content-center text-center">
+		<div>
+			<h1 class="display-4 font-weight-bold">Welcome to Smart Contact Manager</h1>
+			<p class="lead mt-3">Your personal assistant to organize and manage all your contacts efficiently and securely.</p>
+			<a href="/signup" class="btn btn-primary btn-lg mt-4">
+				<i class="fas fa-user-plus"></i> Get Started
+			</a>
+		</div>
+	</section>
+
+	<!-- Info Section -->
+	<section class="info-section text-center">
+		<div class="container">
+			<h2 class="mb-4 text-primary">Why Smart Contact Manager?</h2>
+			<div class="row">
+				<div class="col-md-4 mb-4">
+					<i class="fas fa-address-book fa-3x text-success mb-3"></i>
+					<h5>Organize Contacts</h5>
+					<p>Save, categorize, and manage all your personal and professional contacts in one place.</p>
+				</div>
+				<div class="col-md-4 mb-4">
+					<i class="fas fa-shield-alt fa-3x text-info mb-3"></i>
+					<h5>Secure and Private</h5>
+					<p>We prioritize your data privacy with secure authentication and encrypted storage.</p>
+				</div>
+				<div class="col-md-4 mb-4">
+					<i class="fas fa-laptop-code fa-3x text-warning mb-3"></i>
+					<h5>Easy to Use</h5>
+					<p>Clean interface and responsive design make managing your contacts effortless.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

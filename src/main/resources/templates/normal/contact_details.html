@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{normal/userbase::layout(~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+
+<body>
+	<section>
+		<h1 style="text-align: center; margin-top: 20px;">
+			Showing Contact For <span th:text="${user.name}"></span>
+		</h1>
+
+		<div th:each="i : ${contact}"
+			style="max-width: 600px; margin: 20px auto; border: 1px solid #ccc; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
+			<div
+				style="display: flex; flex-direction: column; align-items: center;">
+				<img th:src="@{'/img/' + ${i.image}}" alt="Profile Picture"
+					style="height: 200px; width: 200px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;" />
+			</div>
+
+			<div style="font-size: 16px; line-height: 1.6;" class="text-center"
+				th:if="${contact != null}">
+				<p>
+					<strong>Name:</strong> <span th:text="${i.name}"></span>
+				</p>
+				<p>
+					<strong>Email:</strong> <span th:text="${i.email}"></span>
+				</p>
+				<p>
+					<strong>Phone:</strong> <span th:text="${i.phone}"></span>
+				</p>
+				<p>
+					<strong>Work:</strong> <span th:utext="${i.work}"></span>
+				</p>
+				<p>
+					<strong>Description:</strong> <span th:utext="${i.description}"></span>
+				</p>
+			</div>
+
+			<div class="container"
+				style="display: flex; justify-content: center; gap: 10px;">
+
+				<a th:href="@{'/user/update/' + ${i.cid}}"
+					class="btn btn-info btn-sm "> <i class="fas fa-pen"></i> Update
+				</a> <a th:href="@{'/user/delete/'+${cid}}"
+					th:onclick="|delete_contact(${i.cid})|"
+					class="btn btn-danger btn-sm"> <i class="fas fa-trash-alt"></i>
+					Delete
+				</a>
+			</div>
+		</div>
+		<div th:if="${contact == null}" class="alert alert-danger text-center">
+			<i class="fas fa-exclamation-triangle"></i> You do not have
+			permission to view this contact.
+		</div>
+	</section>
+</body>
+</html>

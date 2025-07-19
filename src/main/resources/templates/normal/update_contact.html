@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{normal/userbase::layout(~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+
+<body>
+	<section>
+		<div class="container">
+			<div th:if="${error}" class="alert alert-danger text-center">
+				<span th:text="${error}"></span>
+			</div>
+
+			<!-- <div th:if="${message}" th:classappend="${message.type}"
+				class="alert" role="alert" th:text="${message.content}"></div>
+ -->
+			<div class="card mt-4 shadow">
+				<div class="card-body">
+					<h2 class="text-center text-primary mb-4">Update Contact</h2>
+					<!-- Display the success message if present -->
+					<div th:if="${message}" id="flashMessage"
+						class="alert alert-success text-center">
+						<span th:text="${message}"></span>
+					</div>
+
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-8">
+								<form id="updateContactForm" th:object="${contacts}"
+									method="post" th:action="@{/user/processupdate}"
+									enctype="multipart/form-data">
+
+									<input type="hidden" th:value="${contacts.cid}" name='cid' />
+									<!-- Name -->
+									<div class="mb-3">
+										<label for="name" class="form-label"> <i
+											class="bi bi-person"></i> Name
+										</label> <input type="text" class="form-control" id="name" name="name"
+											placeholder="Enter Name" th:value="${contacts.name}" required
+											minlength="3" pattern="[A-Za-z\s]+" />
+										<div th:if="${#fields.hasErrors('name')}" class="text-danger">
+											<p th:each="err : ${#fields.errors('name')}" th:text="${err}"></p>
+										</div>
+										<div class="form-text">Name must be at least 3
+											characters and only letters.</div>
+									</div>
+
+									<!-- Email -->
+									<div class="mb-3">
+										<label for="email" class="form-label"><i
+											class="bi bi-envelope"></i> Email address</label> <input type="email"
+											class="form-control" id="email" name="email"
+											placeholder="Enter your email" th:value="${contacts.email}"
+											required />
+										<div th:if="${#fields.hasErrors('email')}" class="text-danger">
+											<p th:each="err : ${#fields.errors('email')}"
+												th:text="${err}"></p>
+										</div>
+									</div>
+
+									<!-- Phone -->
+									<div class="mb-3">
+										<label for="phone" class="form-label"><i
+											class="bi bi-phone"></i> Phone Number</label> <input type="tel"
+											class="form-control" id="phone" name="phone"
+											placeholder="Enter phone number" th:value="${contacts.phone}"
+											required pattern="\d{10}" />
+										<div th:if="${#fields.hasErrors('phone')}" class="text-danger">
+											<p th:each="err : ${#fields.errors('phone')}"
+												th:text="${err}"></p>
+										</div>
+									</div>
+
+									<!-- Work -->
+									<div class="mb-3">
+										<label for="work" class="form-label"><i
+											class="bi bi-briefcase"></i> Profession</label> <input type="text"
+											class="form-control" id="work" name="work"
+											placeholder="Enter profession" th:value="${contacts.work}" />
+									</div>
+
+									<!-- Description -->
+									<div class="form-group">
+										<label for="description"><i class="bi bi-chat-dots"></i>
+											Description</label>
+										<textarea name="description" id="mytextarea"
+											class="form-control"
+											placeholder="Write something about the contact..."
+											maxlength="1000" th:text="${contacts.description}"></textarea>
+
+										<div th:if="${#fields.hasErrors('description')}"
+											class="text-danger">
+											<p th:each="err : ${#fields.errors('description')}"
+												th:text="${err}"></p>
+										</div>
+									</div>
+
+									<div class="custom-file mt-3">
+										<input type="file" name="Profileimage" />
+									</div>
+
+									<!-- Submit Button with Icon -->
+									<div class="text-center mt-3">
+										<button type="button" id="submitBtn" class="btn btn-primary">
+											<i class="bi bi-save"></i> Update Contact
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script
+			src="https://cdn.tiny.cloud/1/kk1i1swv51mk14o9vfcgpzvu39rjyopm0ux9kytc8ojn6zmt/tinymce/6/tinymce.min.js"
+			referrerpolicy="origin"></script>
+		<script>
+    tinymce.init({
+      selector: '#mytextarea'
+    });
+  </script>
+
+		<!-- sweet alert for update the change -->
+		<script>
+  tinymce.init({
+    selector: '#mytextarea'
+  });
+
+  // SweetAlert confirmation before submitting the form
+  document.getElementById("submitBtn").addEventListener("click", function (e) {
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById("updateContactForm").submit();
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  });
+</script>
+	</section>
+
+</body>
+</html>

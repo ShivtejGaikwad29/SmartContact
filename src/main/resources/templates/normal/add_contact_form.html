@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{normal/userbase::layout(~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Add Contact Form</title>
+
+<!-- Bootstrap Icons CDN -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+	rel="stylesheet">
+
+<!-- Add Bootstrap CSS for styling -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+	<section>
+		<div class="container">
+			<div th:if="${error}" class="alert alert-danger text-center">
+				<span th:text="${error}"></span>
+			</div>
+
+			<div class="card mt-4 shadow">
+				<div class="card-body">
+					<h2 class="text-center text-primary mb-4">Add New Contact</h2>
+					<!-- Display the success message if present -->
+					<div th:if="${message}" id="flashMessage"
+						class="alert alert-success text-center">
+						<span th:text="${message}"></span>
+					</div>
+
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-md-8">
+								<form th:object="${contacts}" method="post"
+									th:action="@{/user/process-contact}"
+									enctype="multipart/form-data">
+									<!-- Name -->
+									<div class="mb-3">
+										<label for="name" class="form-label"> <i
+											class="bi bi-person"></i> Name
+										</label> <input type="text" class="form-control" id="name" name="name"
+											placeholder="Enter Name" th:value="${contacts.name}" required
+											minlength="3" pattern="[A-Za-z\s]+" />
+										<div th:if="${#fields.hasErrors('name')}" class="text-danger">
+											<p th:each="err : ${#fields.errors('name')}" th:text="${err}"></p>
+										</div>
+										<div class="form-text">Name must be at least 3
+											characters and only letters.</div>
+									</div>
+
+									<!-- Email -->
+									<div class="mb-3">
+										<label for="email" class="form-label"><i
+											class="bi bi-envelope"></i> Email address</label> <input type="email"
+											class="form-control" id="email" name="email"
+											placeholder="Enter your email" th:value="${contacts.email}"
+											required />
+										<div th:if="${#fields.hasErrors('email')}" class="text-danger">
+											<p th:each="err : ${#fields.errors('email')}"
+												th:text="${err}"></p>
+										</div>
+									</div>
+
+									<!-- Phone -->
+									<div class="mb-3">
+										<label for="phone" class="form-label"><i
+											class="bi bi-phone"></i> Phone Number</label> <input type="tel"
+											class="form-control" id="phone" name="phone"
+											placeholder="Enter phone number" th:value="${contacts.phone}"
+											required pattern="\d{10}" />
+										<div th:if="${#fields.hasErrors('phone')}" class="text-danger">
+											<p th:each="err : ${#fields.errors('phone')}"
+												th:text="${err}"></p>
+										</div>
+									</div>
+
+									<!-- Work -->
+									<div class="mb-3">
+										<label for="work" class="form-label"><i
+											class="bi bi-briefcase"></i> Profession</label> <input type="text"
+											class="form-control" id="work" name="work"
+											placeholder="Enter profession" th:value="${contacts.work}" />
+									</div>
+
+									<!-- Description -->
+									<div class="form-group">
+										<label for="description"><i class="bi bi-chat-dots"></i>
+											Description</label>
+										<textarea name="description" id="mytextarea"
+											class="form-control" th:value="${contacts.description}"
+											placeholder="Write something about the contact..."
+											maxlength="1000"></textarea>
+										<div th:if="${#fields.hasErrors('description')}"
+											class="text-danger">
+											<p th:each="err : ${#fields.errors('description')}"
+												th:text="${err}"></p>
+										</div>
+									</div>
+
+									<div class="custom-file mt-3">
+										<input type="file" name="Profileimage" />
+									</div>
+
+									<!-- Submit Button with Icon -->
+									<div class="text-center mt-3">
+										<button type="submit" class="btn btn-primary">
+											<i class="bi bi-save"></i> Save Contact
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<script
+			src="https://cdn.tiny.cloud/1/kk1i1swv51mk14o9vfcgpzvu39rjyopm0ux9kytc8ojn6zmt/tinymce/6/tinymce.min.js"
+			referrerpolicy="origin"></script>
+		<script>
+    tinymce.init({
+      selector: '#mytextarea'
+    });
+  </script>
+
+		<!-- Flash Message Auto-Hide -->
+		<script th:if="${message}" type="text/javascript">
+    setTimeout(function () {
+        var flashMessage = document.getElementById("flashMessage");
+        if (flashMessage) {
+            flashMessage.style.display = 'none';
+        }
+    }, 3000);
+</script>
+
+	</section>
+
+	<!-- Add Bootstrap JS (optional) -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

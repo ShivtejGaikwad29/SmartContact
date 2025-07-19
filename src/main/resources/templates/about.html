@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us</title>
+</head>
+<body>
+    <section class="container py-5">
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-10">
+                <div class="bg-white shadow-lg rounded-4 p-5">
+                    <h1 class="text-center mb-4">About Us</h1>
+                    <p class="lead text-muted text-center">
+                        Welcome to <strong>Contact Manager</strong> – where technology meets simplicity!
+                    </p>
+
+                    <hr class="my-4">
+
+                    <h4>🌟 Our Mission</h4>
+                    <p>
+                        To provide reliable and user-friendly solutions that make your everyday tasks easier and more efficient. 
+                        Whether it's managing your data, staying organized, or just simplifying life – we've got you covered.
+                    </p>
+
+                    <h4>💡 What We Offer</h4>
+                    <ul>
+                        <li>User-friendly design and navigation</li>
+                        <li>Secure login and account management</li>
+                        <li>Fast, responsive, and mobile-friendly experience</li>
+                        <li>Continuous improvements and support</li>
+                    </ul>
+
+                    <h4>👨‍💻 Our Team</h4>
+                    <p>
+                        We are a passionate group of developers, designers, and dreamers working together to build something meaningful.
+                        Innovation, collaboration, and dedication fuel our journey.
+                    </p>
+
+                    <div class="text-center mt-5">
+                        <a th:href="@{/}" class="btn btn-primary btn-lg">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

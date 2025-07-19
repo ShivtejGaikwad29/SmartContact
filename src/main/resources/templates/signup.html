@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Signup</title>
+</head>
+<body>
+	<section style="min-height: 90vh; margin-top: 62px;"
+		class="d-flex align-items-center justify-content-center bg-light">
+
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="my-card shadow rounded-4 p-5 bg-white">
+						<!-- Flash message -->
+						<div th:if="${message}" th:classappend="${message.type}"
+							class="alert" role="alert" th:text="${message.content}"></div>
+
+						<h2 class="text-center mb-2 text-primary mb-2">📝 Register
+							Here..! 📝</h2>
+
+						<form th:action="@{/do_register}" method="post"
+							th:object="${user}">
+							<!-- Name -->
+							<div class="mb-2">
+								<label for="name" class="form-label">Name</label> <input
+									type="text" class="form-control" id="name" name="name"
+									placeholder="Enter Name" required minlength="3"
+									pattern="[A-Za-z\s]+" th:value="${user.name}">
+								<div class="form-text">Name must be at least 3 characters
+									and only letters.</div>
+							</div>
+
+							<!-- Email -->
+							<div class="mb-2">
+								<label for="email" class="form-label">Email address</label> <input
+									type="email" class="form-control" id="email" name="email"
+									placeholder="Enter your email" required
+									th:value="${user.email}">
+								<div class="form-text">We'll never share your email with
+									anyone else.</div>
+							</div>
+
+							<!-- Password Field -->
+							<div class="mb-2">
+								<label for="password" class="form-label">Password</label> <input
+									type="password" class="form-control" id="password"
+									name="password" placeholder="Enter Password" required
+									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"
+									title="Password must be at least 6 characters and include letters, numbers, and a special character.">
+								<div class="form-text">Must contain letters, numbers, and
+									at least one special character (e.g. @, $, !, %, *).</div>
+							</div>
+
+							<!-- About -->
+							<div class="form-group">
+								<label for="about">About</label>
+								<textarea id="about" name="about" rows="4" th:field="*{about}"
+									class="form-control"
+									placeholder="Write something about yourself..."></textarea>
+							</div>
+
+							<!-- Terms and Conditions -->
+							<div class="form-group form-check">
+								<input type="checkbox" name="agreement" class="form-check-input"
+									id="agreement" required /> <label for="agreement">Accept
+									Terms And Conditions</label>
+							</div>
+
+							<!-- Submit and Reset Buttons -->
+							<div class="row mt-4">
+								<div class="col-md-6 d-grid">
+									<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+								</div>
+								<div class="col-md-6 d-grid">
+									<button type="reset" class="btn btn-secondary btn-lg">Reset</button>
+								</div>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

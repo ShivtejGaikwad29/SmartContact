@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{normal/userbase::layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Your Contacts</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+	<section>
+		<div class="card-body">
+
+			<!-- Flash Message -->
+			<div th:if="${message}" id="flashMessage"
+				class="alert alert-success text-center">
+				<span th:text="${message.content}"></span>
+			</div>
+
+			<!-- Heading and Add Contact Button -->
+			<div class="d-flex justify-content-between align-items-center mb-5">
+				<h2 class="text-primary">
+					<i class="fas fa-address-book"></i> Your Contacts
+				</h2>
+				<a href="/user/add-contact" class="btn btn-primary"> <i
+					class="fas fa-user-plus"></i> Add Contact
+				</a>
+			</div>
+
+			<!-- search bar -->
+
+			<div class="search-container my-3 mb-4">
+				<input onkeyup="search()" id="search-input" type="text"
+					class="form-control" placeholder="Search Contact here..." />
+				<div class="search-result" style="display: none;">
+					<!-- Result will appear here -->
+				</div>
+			</div>
+
+			<!-- No Contacts Message -->
+			<div th:if="${#lists.isEmpty(contacts)}"
+				class="alert alert-warning mt-3 text-center">
+				<i class="fas fa-exclamation-circle"></i> No contacts available.
+				Please add one!
+			</div>
+
+			<!-- Contacts Table: Render only if contacts are available -->
+			<div th:if="${!#lists.isEmpty(contacts)}" class="table-responsive">
+				<table class="table table-hover table-bordered">
+					<thead class="thead-light text-center">
+						<tr>
+							<th scope="col">#ID</th>
+							<th scope="col">Name</th>
+							<th scope="col">Email</th>
+							<th scope="col">Phone</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody class="text-center">
+						<tr th:each="c : ${contacts}">
+							<td th:text="${user.name+c.cid}">1</td>
+							<td><img class="contact-img" th:src="@{'/img/'+${c.image}}"
+								alt="Profile Picture" /> <span class="ml-2" th:text="${c.name}"></span></td>
+
+							<td><a th:href="@{'/user/'+${c.cid}+'/contact'}"> <span
+									th:text="${c.email}"></span>
+							</a></td>
+
+							<td th:text="${c.phone}"></td>
+							<td><a th:href="@{'/user/update/' + ${c.cid}}"
+								class="btn btn-info btn-sm "> <i class="fas fa-pen"></i>
+									Update
+							</a> <a th:href="@{'/user/delete/'+${c.cid}}"
+								th:onclick="|delete_contact(${c.cid})|"
+								class="btn btn-danger btn-sm"> <i class="fas fa-trash-alt"></i>
+									Delete
+							</a></td>
+
+						</tr>
+					</tbody>
+				</table>
+
+				<!-- Pagination -->
+				<nav aria-label="Page navigation example" class="mt-3">
+					<ul class="pagination d-flex justify-content-center">
+						<li th:if="${currentpage > 0}" class="page-item"><a
+							class="page-link"
+							th:href="@{'/user/show_contacts/' + ${currentpage - 1}}">Previous</a>
+						</li>
+
+						<li th:each="i : ${#numbers.sequence(1, totalpages)}"
+							th:classappend="${currentpage == i - 1 ? 'active' : ''}"
+							class="page-item"><a
+							th:href="@{'/user/show_contacts/' + ${i - 1}}" class="page-link">
+								<span th:text="${i}"></span>
+						</a></li>
+
+						<li th:if="${currentpage < totalpages - 1}" class="page-item">
+							<a class="page-link"
+							th:href="@{'/user/show_contacts/' + ${currentpage + 1}}">Next</a>
+						</li>
+					</ul>
+				</nav>
+
+
+			</div>
+	</section>
+</body>
+</html>
