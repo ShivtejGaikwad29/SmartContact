@@ -12,7 +12,7 @@ public class EmailService {
 	public boolean sendEmail(String subject,String message,String to){
 //      rest of the code
       boolean f = false;
-      String from = "smartcontact25@gmail.com";
+      String from = "";
 
       String host = "smtp.gmail.com";
 
@@ -24,7 +24,7 @@ public class EmailService {
       //step-1 create session
       Session session = Session.getInstance(properties, new Authenticator() {
           protected PasswordAuthentication getPasswordAuthentication() {
-              return new PasswordAuthentication("smartcontact25@gmail.com", "igsl wgtg qphk crvg");
+              return new PasswordAuthentication("mail id", "password");
           }
       });
 
